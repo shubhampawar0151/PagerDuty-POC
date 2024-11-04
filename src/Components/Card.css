@@ -1,0 +1,8 @@
+.card-body{
+    border: gray solid;
+    border-left: 8px gray solid !important;
+}
+
+.btn-border{
+    border: gray solid;
+}
