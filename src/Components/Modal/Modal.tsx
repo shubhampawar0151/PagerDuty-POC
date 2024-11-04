@@ -1,4 +1,4 @@
-import PieChart from '../Piechart';
+import PieChart from '../PieChart/Piechart';
 
 interface ModalProps {
     isOpen: boolean;

@@ -1,5 +1,5 @@
 import { Modal, Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
-import { FaEdit } from 'react-icons/fa'; // Import the edit icon from React Icons
+import { FaEdit } from 'react-icons/fa';
 
 interface InfoModalProps {
     show: any,

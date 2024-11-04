@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Filter from "./Filter";
-import Datalayer from "./Datalayer";
-import Header from './Header';
+import Filter from "../Filter/Filter";
+import Datalayer from "../Datalayer/Datalayer";
+import Header from '../Header/Header';
 import "./Dashboard.css";
 
 function Dashboard() {

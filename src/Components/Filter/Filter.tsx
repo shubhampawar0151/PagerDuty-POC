@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import capitalizeFirstLetter from './../Pipe/capitalizeFirstLetter';
-import { fetchServices, Service } from './../Services/pagerDutyService'; // Import the service function and interface
+import capitalizeFirstLetter from './../../Pipe/capitalizeFirstLetter';
+import { fetchServices, Service } from './../../Services/pagerDutyService'; // Import the service function and interface
 import "./Filter.css";
 
 interface FilterProps {
