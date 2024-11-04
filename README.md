@@ -1,4 +1,20 @@
-Setup Instructions:
+This repository contains a proof-of-concept (POC) application for PagerDuty insights.
+
+**Requirements**
+
+Node.js (version 16 or higher recommended)
+
+npm (Node Package Manager)
+
+To verify your versions, run:
+
+node -v
+
+npm -v
+
+
+**Setup Instructions:**
+
 1. Clone the repository:
 
 Clone the repository from GitHub: https://github.com/shubhampawar0151/PagerDuty-POC.git
