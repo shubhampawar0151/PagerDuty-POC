@@ -4,12 +4,12 @@ import Datalayer from "../Datalayer/Datalayer";
 import Header from '../Header/Header';
 import "./Dashboard.css";
 
-function Dashboard() {
+function Dashboard() { // A parent compoenent which has Header, Filter and Data Component in it
 
     const [formData, setFormData] = useState({ status: '', urgency: '', service: '', fromDate: '', toDate: '' });
 
     const handleFormSubmit = (data: any) => {
-        setFormData(data);
+        setFormData(data); // on submit from filter form
         // console.log("Form Data : " + data);
     };
 

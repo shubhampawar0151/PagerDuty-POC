@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import capitalizeFirstLetter from './../../Pipe/capitalizeFirstLetter';
-import { fetchServices, Service } from './../../Services/pagerDutyService'; // Import the service function and interface
+import { fetchServices, Service } from './../../Services/pagerDutyService';
 import "./Filter.css";
 
 interface FilterProps {
@@ -25,19 +25,21 @@ function Filter({ onSubmit }: FilterProps) {
     const [toDate, setToDate] = useState<string>('');
     const [errorMessage, setErrorMessage] = useState<string>('');
 
-    // Fetch services data on component mount
+
     useEffect(() => {
         const loadServices = async () => {
             try {
-                const servicesData = await fetchServices(); // Call the service function
-                setServices(servicesData);
+                const servicesData = await fetchServices(); // get the list of available services
+                setServices(servicesData); // set it in dropdown in filter
             } catch (error) {
-                setErrorMessage('Failed to load services. Please try again later.');
+                setErrorMessage('Failed to load services. Please try again later.'); // if error display it
             }
         };
 
         loadServices();
     }, []);
+
+    // once user clicks submit below logic is implemented
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -46,7 +48,7 @@ function Filter({ onSubmit }: FilterProps) {
         const formattedFromDate = fromDate ? new Date(fromDate).toISOString() : '';
         const formattedToDate = toDate ? new Date(toDate).toISOString() : '';
 
-        // Validate date range
+        // Validate date since and until
         if (new Date(formattedToDate) <= new Date(formattedFromDate)) {
             setErrorMessage('To Date must be after From Date.');
             return;
@@ -61,6 +63,7 @@ function Filter({ onSubmit }: FilterProps) {
         });
     };
 
+    // on clcik of reset button reset all the fields in the form
     const handleReset = () => {
         setSelectedStatus('');
         setSelectedUrgency('');
@@ -71,7 +74,9 @@ function Filter({ onSubmit }: FilterProps) {
 
     return (
         <div className='form-div'>
+            {/* Form for filter panel */}
             <form onSubmit={handleSubmit}>
+                {/* Status dowpdown in filter panel */}
                 <div className="mb-3">
                     <label htmlFor="statusSelect" className="form-label">Select Status</label>
                     <select
@@ -86,6 +91,8 @@ function Filter({ onSubmit }: FilterProps) {
                         ))}
                     </select>
                 </div>
+
+                {/* Urgency dowpdown in filter panel */}
 
                 <div className="mb-3">
                     <label htmlFor="urgencySelect" className="form-label">Select Urgency</label>
@@ -102,6 +109,8 @@ function Filter({ onSubmit }: FilterProps) {
                     </select>
                 </div>
 
+                {/* Service dowpdown in filter panel */}
+
                 <div className="mb-3">
                     <label htmlFor="serviceSelect" className="form-label">Select Service</label>
                     <select
@@ -117,6 +126,8 @@ function Filter({ onSubmit }: FilterProps) {
                     </select>
                 </div>
 
+                {/*From Date in filter panel */}
+
                 <div className="mb-3">
                     <label htmlFor="fromDate" className="form-label">From Date</label>
                     <input
@@ -128,6 +139,8 @@ function Filter({ onSubmit }: FilterProps) {
                     />
                 </div>
 
+                {/*To Date in filter panel */}
+
                 <div className="mb-3">
                     <label htmlFor="toDate" className="form-label">To Date</label>
                     <input
@@ -138,6 +151,8 @@ function Filter({ onSubmit }: FilterProps) {
                         onChange={(e) => setToDate(e.target.value)}
                     />
                 </div>
+
+                {/*Display error message on wrong selected dates and reset & submit button */}
 
                 {errorMessage && <div className="text-danger">{errorMessage}</div>}
 

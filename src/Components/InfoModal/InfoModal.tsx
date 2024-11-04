@@ -13,6 +13,7 @@ interface InfoModalProps {
 function InfoModal({ show, handleClose, title, currentStatus, currentPriority, body }: InfoModalProps) {
     return (
         <Modal show={show} onHide={handleClose} centered>
+            {/* Header in popup of a card - with close and edit button */}
             <Modal.Header closeButton>
                 <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Modal.Title>{title}</Modal.Title>
@@ -26,6 +27,7 @@ function InfoModal({ show, handleClose, title, currentStatus, currentPriority, b
                     </OverlayTrigger>
                 </div>
             </Modal.Header>
+            {/* Body in popup of a card - display the fields*/}
             <Modal.Body>
                 <p><strong>Status:</strong> {currentStatus}</p>
                 <p><strong>Priority:</strong> {currentPriority}</p>
@@ -37,6 +39,7 @@ function InfoModal({ show, handleClose, title, currentStatus, currentPriority, b
                 <p><strong>Last Status Change At:</strong> {body.last_status_change_at}</p>
                 {body.resolved_at && <p><strong>Resolved At:</strong> {body.resolved_at}</p>}
             </Modal.Body>
+            {/* Footer in popup of a card - close button */}
             <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>
                     Close

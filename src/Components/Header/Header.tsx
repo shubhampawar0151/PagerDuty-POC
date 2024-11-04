@@ -1,24 +1,23 @@
 import { useState } from "react";
 import { Navbar, Nav, Modal, Button, Tooltip, OverlayTrigger } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./Header.css";
 
 function Header() {
-    const [showDeveloperInfo, setShowDeveloperInfo] = useState<boolean>(false);
+    const [showDeveloperInfo, setShowDeveloperInfo] = useState<boolean>(false); // developer info popup variable
 
-    // Handlers for opening/closing the modals
-    const toggleDeveloperInfo = () => setShowDeveloperInfo(!showDeveloperInfo);
+
+    const toggleDeveloperInfo = () => setShowDeveloperInfo(!showDeveloperInfo); // open / clsoe developer info popup code
 
     return (
         <header>
             <Navbar bg="dark" variant="dark" expand="lg" className="p-3">
-                {/* Centered Navbar Brand */}
+                {/* Heading / title */}
                 <div className="d-flex w-100 justify-content-center position-relative">
                     <Navbar.Brand href="#" className="font-weight-bold text-center mx-auto">
                         PagerDuty  Insights  Dashboard
                     </Navbar.Brand>
 
-                    {/* Right-aligned Nav items */}
+                    {/* Buttons - login/ sign up/ developed by */}
                     <Nav className="ml-auto position-absolute" style={{ right: 0 }}>
                         <OverlayTrigger
                             placement="bottom"
@@ -40,33 +39,11 @@ function Header() {
                             Developed By
                         </Button>
 
-                        {/* User Dropdown */}
-                        {/* <NavDropdown
-                            title={
-                                <img
-                                    src="/Users/shubhamdeepakpawar/Downloads/IMG_8104.HEIC"
-                                    alt="User"
-                                    className="rounded-circle"
-                                />
-                            }
-                            id="user-dropdown"
-                            className="mx-2"
-                            align="start"
-                        >
-                            <NavDropdown.Item disabled>User Name</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item onClick={() => alert("Profile clicked")}>
-                                Profile
-                            </NavDropdown.Item>
-                            <NavDropdown.Item onClick={() => alert("Log Out clicked")}>
-                                Sign Out
-                            </NavDropdown.Item>
-                        </NavDropdown> */}
                     </Nav>
                 </div>
             </Navbar>
 
-            {/* Developer Info Modal */}
+            {/* Developer Info Popup */}
             <Modal show={showDeveloperInfo} onHide={toggleDeveloperInfo}>
                 <Modal.Header closeButton>
                     <Modal.Title>Developer Info</Modal.Title>

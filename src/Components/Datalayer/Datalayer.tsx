@@ -21,32 +21,32 @@ function Datalayer({ currentStatus, currentUrgency, currentService, currentFromD
     const itemsPerPage = 9;
 
     const fetchData = async () => {
-        setLoading(true);
+        setLoading(true); // show loading while loading the data
         setError(null);
-        setSortOrder(null);
+        setSortOrder(null); // Initial show data as fetched from API
         // console.log("From : " + currentFromDate + " To : " + currentToDate);
 
         try {
-            const result = await fetchIncidents(currentStatus, currentUrgency, currentService, currentFromDate, currentToDate);
+            const result = await fetchIncidents(currentStatus, currentUrgency, currentService, currentFromDate, currentToDate); // fetch data from API 
             setData(result);
         } catch (error: any) {
-            setError(error.message);
+            setError(error.message); // if error the set the error message
         } finally {
-            setLoading(false);
+            setLoading(false); // turn off the loading spinner
         }
     };
 
     useEffect(() => {
-        fetchData();
+        fetchData(); // fetch data from API - Change in any parameter from the filer on the left and on Intial load
     }, [currentStatus, currentUrgency, currentService, currentFromDate, currentToDate]);
 
     const handleRefresh = () => {
         setSortOrder(null); // Reset sort order on refresh
-        fetchData();
+        fetchData(); // As user clicked refressh fetch data based of pre-selected filters if any
     };
 
     const handleSortChange = (order: 'asc' | 'desc') => {
-        setSortOrder(order);
+        setSortOrder(order); // sort the data as user selected - either ascending or decending
 
         // Sort data based on created_at timestamp
         const sortedData = [...data].sort((a: any, b: any) => {
@@ -58,7 +58,7 @@ function Datalayer({ currentStatus, currentUrgency, currentService, currentFromD
         setData(sortedData);
     };
 
-    if (loading) {
+    if (loading) { // load spinner logic
         return (
             <div className="text-center mt-4">
                 <div className="spinner-border" role="status">
@@ -69,6 +69,7 @@ function Datalayer({ currentStatus, currentUrgency, currentService, currentFromD
         );
     }
 
+    // pagination logic
     const totalPages = Math.ceil(data.length / itemsPerPage);
     const currentData = data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
     const handlePageChange = (pageNumber: any) => setCurrentPage(pageNumber);
@@ -102,14 +103,14 @@ function Datalayer({ currentStatus, currentUrgency, currentService, currentFromD
             ) : (
                 <div>
                     <div className="d-flex justify-content-between mb-3">
-                        {/* Sorting Dropdown */}
+                        {/* Sort Created At Dropdown */}
                         <select
                             className="form-select"
                             style={{ width: '200px' }}
                             onChange={(e) => handleSortChange(e.target.value as 'asc' | 'desc')}
                             value={sortOrder || ''}
                         >
-                            <option value="" disabled>Sort Based on Created At</option>
+                            <option value="" disabled>Sort : Created At</option>
                             <option value="asc">Ascending</option>
                             <option value="desc">Descending</option>
                         </select>
@@ -127,6 +128,8 @@ function Datalayer({ currentStatus, currentUrgency, currentService, currentFromD
                             </button>
                         </div>
                     </div>
+
+                    {/* Logic t display cards and show messages if no data found */}
 
                     {data.length === 0 ? (
                         <p>No data found!</p>

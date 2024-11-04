@@ -44,13 +44,13 @@ function PieChart({ data }: PieChartProps) {
     };
 
     // console.log(data);
-
+    // if no data present return no data found !!
     if (data.length == 0) {
         return (
             <h1>No Data Found</h1>
         )
     }
-
+    // if we have a data - pass it to the highcharts libarary to display the chart (piechart in our scenario)
     return (
         <div className='row'>
             <div className='col-md-12'>

@@ -1,10 +1,7 @@
 import { useState } from 'react';
-import InfoModal from '../InfoModal/InfoModal'; // Import the modal component
+import InfoModal from '../InfoModal/InfoModal';
 import datePipe from '../../Pipe/datePipe';
 import capitalizeFirstLetter from '../../Pipe/capitalizeFirstLetter';
-import "./Card.css";
-import PropTypes from 'prop-types';
-
 
 interface CardProps {
     title: any,
@@ -19,10 +16,10 @@ function Card({ title, currentStatus, currentPriority, currentUrgency, createdAt
     const [showModal, setShowModal] = useState(false);
 
     // Function to toggle modal visibility
-    const handleShowModal = () => setShowModal(true);
-    const handleCloseModal = () => setShowModal(false);
+    const handleShowModal = () => setShowModal(true); // display the popup
+    const handleCloseModal = () => setShowModal(false); // close the popup
 
-    const getUrgencyColor = (urgency: any) => {
+    const getUrgencyColor = (urgency: any) => { // set color for urgency in card
         switch (urgency) {
             case 'high':
                 return 'text-danger';
@@ -33,7 +30,7 @@ function Card({ title, currentStatus, currentPriority, currentUrgency, createdAt
         }
     };
 
-    const getPriorityColor = (priority: any) => {
+    const getPriorityColor = (priority: any) => { // set color for priorities in card
         switch (priority) {
             case 'P1':
                 return { backgroundColor: 'rgb(168, 23, 28)', color: 'white' };
@@ -50,20 +47,6 @@ function Card({ title, currentStatus, currentPriority, currentUrgency, createdAt
         }
     };
 
-    const getStatusColor = (status: any): any => {
-        switch (status) {
-            case 'triggered':
-                return { backgroundColor: '#E62434', color: 'white' };
-            //return { color: "#E62434" };
-            case 'acknowledged':
-                return { backgroundColor: '#D14905', color: 'white' };
-            case 'resolved':
-                return { backgroundColor: '#048A24', color: 'white' };
-            default:
-                return { backgroundColor: '#048A24', color: 'white' };
-        }
-    };
-
     return (
         <div className="card mb-3 card-body">
             <div className=" d-flex justify-content-between align-items-center">
@@ -77,7 +60,7 @@ function Card({ title, currentStatus, currentPriority, currentUrgency, createdAt
             </div>
             <div className="card-text">
                 <div>
-                    Status: <span className={getStatusColor(currentStatus)}>{capitalizeFirstLetter(currentStatus)}</span> |
+                    Status: <span>{capitalizeFirstLetter(currentStatus)}</span> |
                     Urgency: <span className={getUrgencyColor(currentUrgency)}>{capitalizeFirstLetter(currentUrgency)}</span>
                 </div>
                 Priority: <span style={getPriorityColor(currentPriority)}>{capitalizeFirstLetter(currentPriority)}</span>
@@ -85,7 +68,7 @@ function Card({ title, currentStatus, currentPriority, currentUrgency, createdAt
                     Created At: {datePipe(createdAt)}
                 </div>
             </div>
-            {/* Modal component */}
+
             {showModal && (
                 <InfoModal
                     show={showModal}
@@ -99,14 +82,5 @@ function Card({ title, currentStatus, currentPriority, currentUrgency, createdAt
         </div>
     );
 }
-
-Card.propTypes = {
-    title: PropTypes.string.isRequired,
-    currentStatus: PropTypes.string.isRequired,
-    currentPriority: PropTypes.string.isRequired,
-    currentUrgency: PropTypes.string.isRequired,
-    createdAt: PropTypes.string.isRequired,
-    body: PropTypes.string.isRequired,
-};
 
 export default Card;

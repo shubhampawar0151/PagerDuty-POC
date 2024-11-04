@@ -1,3 +1,4 @@
+// While displaying we need to capitalize first letter for options and other thing
 const capitalizeFirstLetter = (str: string) : string => {
     if (!str) return str; // Handle null or undefined
     return str
