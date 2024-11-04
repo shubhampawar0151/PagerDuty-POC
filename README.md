@@ -1,50 +1,60 @@
-# React + TypeScript + Vite
+This repository contains a proof-of-concept (POC) application for PagerDuty insights.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Requirements**
 
-Currently, two official plugins are available:
+Node.js (version 16 or higher recommended)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+npm (Node Package Manager)
 
-## Expanding the ESLint configuration
+To verify your versions, run:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+node -v
 
-- Configure the top-level `parserOptions` property like this:
+npm -v
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+**Setup Instructions:**
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. Clone the repository:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+Clone the repository from GitHub: https://github.com/shubhampawar0151/PagerDuty-POC.git
+
+Currently, all the working changes are on the main branch.
+
+2. Install dependencies:
+
+After cloning, open a terminal and navigate to the project directory:
+
+**cd PagerDuty-POC**
+
+Run the following command to install all necessary dependencies:
+
+**npm install**
+
+This will create the node_modules folder required for development.
+
+3. Set up the API Key:
+
+To display PagerDuty data on the dashboard, you’ll need to set an API key in the .env file located within the repo.
+
+Open the .env file and update the following line:
+
+**VITE_API_TOKEN=u+U6ykS_EKB8Q3cXYmdg**
+
+This API key is connected to my instance and can be used temporarily for testing.
+
+5. Run the application:
+
+Start the application with the command:
+
+**npm run dev**
+
+
+
+7. Launch the Dashboard:
+   
+Open your browser and navigate to:
+
+**http://localhost:5173/**
+
+You should now see the PagerDuty Insight dashboard.
