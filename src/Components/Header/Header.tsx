@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Navbar, Nav, Modal, Button, Tooltip, OverlayTrigger } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./header.css";
+import "./Header.css";
 
 function Header() {
     const [showDeveloperInfo, setShowDeveloperInfo] = useState<boolean>(false);
@@ -15,7 +15,7 @@ function Header() {
                 {/* Centered Navbar Brand */}
                 <div className="d-flex w-100 justify-content-center position-relative">
                     <Navbar.Brand href="#" className="font-weight-bold text-center mx-auto">
-                        Pager Duty Insights
+                        PagerDuty  Insights  Dashboard
                     </Navbar.Brand>
 
                     {/* Right-aligned Nav items */}

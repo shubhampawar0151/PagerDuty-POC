@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
-import Card from './Card'; // Adjust the import path based on your file structure
-import { fetchIncidents } from './../Services/pagerDutyService'; // Adjust the import path
+import Card from '../Card/Card';
+import { fetchIncidents } from '../../Services/pagerDutyService';
+import Modal from '../Modal/Modal';
 
 interface DatalayerProps {
-    currentStatus: any,
-    currentUrgency: any,
-    currentService: any,
-    currentFromDate: any,
-    currentToDate: any
+    currentStatus: any;
+    currentUrgency: any;
+    currentService: any;
+    currentFromDate: any;
+    currentToDate: any;
 }
 
 function Datalayer({ currentStatus, currentUrgency, currentService, currentFromDate, currentToDate }: DatalayerProps) {
@@ -15,12 +16,15 @@ function Datalayer({ currentStatus, currentUrgency, currentService, currentFromD
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [sortOrder, setSortOrder] = useState<'asc' | 'desc' | null>(null); // State to track sort order
     const itemsPerPage = 9;
 
     const fetchData = async () => {
         setLoading(true);
         setError(null);
-        console.log("From : " + currentFromDate + " To : " + currentToDate);
+        setSortOrder(null);
+        // console.log("From : " + currentFromDate + " To : " + currentToDate);
 
         try {
             const result = await fetchIncidents(currentStatus, currentUrgency, currentService, currentFromDate, currentToDate);
@@ -37,7 +41,21 @@ function Datalayer({ currentStatus, currentUrgency, currentService, currentFromD
     }, [currentStatus, currentUrgency, currentService, currentFromDate, currentToDate]);
 
     const handleRefresh = () => {
+        setSortOrder(null); // Reset sort order on refresh
         fetchData();
+    };
+
+    const handleSortChange = (order: 'asc' | 'desc') => {
+        setSortOrder(order);
+
+        // Sort data based on created_at timestamp
+        const sortedData = [...data].sort((a: any, b: any) => {
+            const dateA = new Date(a.created_at).getTime();
+            const dateB = new Date(b.created_at).getTime();
+            return order === 'asc' ? dateA - dateB : dateB - dateA;
+        });
+
+        setData(sortedData);
     };
 
     if (loading) {
@@ -52,11 +70,7 @@ function Datalayer({ currentStatus, currentUrgency, currentService, currentFromD
     }
 
     const totalPages = Math.ceil(data.length / itemsPerPage);
-    const currentData = data.slice(
-        (currentPage - 1) * itemsPerPage,
-        currentPage * itemsPerPage
-    );
-
+    const currentData = data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
     const handlePageChange = (pageNumber: any) => setCurrentPage(pageNumber);
 
     const getPageNumbers = () => {
@@ -87,13 +101,31 @@ function Datalayer({ currentStatus, currentUrgency, currentService, currentFromD
                 <p>Error: {error}</p>
             ) : (
                 <div>
-                    <div className="d-flex justify-content-end mb-3">
-                        <button className="btn btn-secondary" onClick={handleRefresh}>
-                            Refresh <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                                <path fillRule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z" />
-                                <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466" />
-                            </svg>
-                        </button>
+                    <div className="d-flex justify-content-between mb-3">
+                        {/* Sorting Dropdown */}
+                        <select
+                            className="form-select"
+                            style={{ width: '200px' }}
+                            onChange={(e) => handleSortChange(e.target.value as 'asc' | 'desc')}
+                            value={sortOrder || ''}
+                        >
+                            <option value="" disabled>Sort Based on Created At</option>
+                            <option value="asc">Ascending</option>
+                            <option value="desc">Descending</option>
+                        </select>
+
+                        {/* Refresh and Analytics Buttons */}
+                        <div>
+                            <button className="btn btn-secondary" onClick={handleRefresh}>
+                                Refresh <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                                    <path fillRule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z" />
+                                    <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466" />
+                                </svg>
+                            </button>
+                            <button className="btn btn-primary ms-2" onClick={() => setModalOpen(true)}>
+                                Analytics
+                            </button>
+                        </div>
                     </div>
 
                     {data.length === 0 ? (
@@ -150,6 +182,7 @@ function Datalayer({ currentStatus, currentUrgency, currentService, currentFromD
                     )}
                 </div>
             )}
+            <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} data={data} />
         </div>
     );
 }

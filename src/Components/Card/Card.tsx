@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import InfoModal from './InfoModal'; // Import the modal component
-import datePipe from './../Pipe/datePipe';
-import capitalizeFirstLetter from './../Pipe/capitalizeFirstLetter';
+import InfoModal from '../InfoModal/InfoModal'; // Import the modal component
+import datePipe from '../../Pipe/datePipe';
+import capitalizeFirstLetter from '../../Pipe/capitalizeFirstLetter';
 import "./Card.css";
 import PropTypes from 'prop-types';
 
@@ -50,6 +50,20 @@ function Card({ title, currentStatus, currentPriority, currentUrgency, createdAt
         }
     };
 
+    const getStatusColor = (status: any): any => {
+        switch (status) {
+            case 'triggered':
+                return { backgroundColor: '#E62434', color: 'white' };
+            //return { color: "#E62434" };
+            case 'acknowledged':
+                return { backgroundColor: '#D14905', color: 'white' };
+            case 'resolved':
+                return { backgroundColor: '#048A24', color: 'white' };
+            default:
+                return { backgroundColor: '#048A24', color: 'white' };
+        }
+    };
+
     return (
         <div className="card mb-3 card-body">
             <div className=" d-flex justify-content-between align-items-center">
@@ -63,7 +77,7 @@ function Card({ title, currentStatus, currentPriority, currentUrgency, createdAt
             </div>
             <div className="card-text">
                 <div>
-                    Status: {capitalizeFirstLetter(currentStatus)} |
+                    Status: <span className={getStatusColor(currentStatus)}>{capitalizeFirstLetter(currentStatus)}</span> |
                     Urgency: <span className={getUrgencyColor(currentUrgency)}>{capitalizeFirstLetter(currentUrgency)}</span>
                 </div>
                 Priority: <span style={getPriorityColor(currentPriority)}>{capitalizeFirstLetter(currentPriority)}</span>

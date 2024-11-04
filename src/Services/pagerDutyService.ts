@@ -1,4 +1,3 @@
-// Define the structure of a Service (you can adjust based on the actual response shape)
 import { API_URL } from "../constants";
 
 export interface Service {
@@ -22,10 +21,10 @@ export const fetchServices = async (): Promise<Service[]> => {
         }
 
         const data = await response.json();
-        return data.services; // Assuming the response has a "services" array
+        return data.services; 
     } catch (error) {
         console.error('Error fetching services:', error);
-        throw error; // Re-throw the error for handling in the component
+        throw error; 
     }
 };
 
@@ -34,10 +33,13 @@ export const fetchIncidents = async (currentStatus : any, currentUrgency : any, 
     const queryParams = new URLSearchParams();
 
     if (currentStatus) queryParams.append('statuses[]', currentStatus);
-    if (currentUrgency) queryParams.append('urgencies[]', currentUrgency); // Supports multiple urgencies
+    if (currentUrgency) queryParams.append('urgencies[]', currentUrgency);
     if (currentService) queryParams.append('service_ids[]', currentService);
     if (currentFromDate) queryParams.append('since', currentFromDate);
     if (currentToDate) queryParams.append('until', currentToDate);
+    queryParams.append('limit', "100");
+    queryParams.append('total', "True");
+
 
     const url = `${`${API_URL}/incidents`}?${queryParams.toString()}`;
     const options = {
