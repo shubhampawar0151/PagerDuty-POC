@@ -1,5 +1,6 @@
 import { Modal, Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { FaEdit } from 'react-icons/fa';
+import "./InfoModal.css";
 
 interface InfoModalProps {
     show: any,
@@ -16,7 +17,7 @@ function InfoModal({ show, handleClose, title, currentStatus, currentPriority, b
             {/* Header in popup of a card - with close and edit button */}
             <Modal.Header closeButton>
                 <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Modal.Title>{title}</Modal.Title>
+                    <Modal.Title className='title'>{title}</Modal.Title>
                     <OverlayTrigger
                         placement="top"
                         overlay={<Tooltip id="edit-tooltip">Edit : Under Development !!!</Tooltip>}
